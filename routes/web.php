@@ -14,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+$slugRegex = '[0-9a-z\-]+';
+$idRegex = '[0-9]+';
 
 Route::get('/', [AgenceController::class, 'index'])->name('agence.index'); 
+Route::get('/biens/{slug}-{property}', [AgenceController::class, 'show'])->name('agence.show')->where([
+    'slug' => $slugRegex,
+    'property' => $idRegex,
+]); 
 
 
 
@@ -28,6 +34,8 @@ Route::prefix('admin')->group(function () {
  Route::delete('/property/{property}', [AdminController::class, 'destroy'])->name('admin.delete');
  Route::get('/property/{property}', [AdminController::class, 'edit'])->name('admin.edit');
  Route::post('/property/{property}', [AdminController::class, 'update'])->name('admin.update');
+ Route::get('/options', [AdminController::class, 'propertyOption'])->name('admin.option');
+ Route::delete('/option{option}', [AdminController::class, 'deleteOption'])->name('admin.option.delete');
 
 
 });

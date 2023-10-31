@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestAdminForm;
+use App\Models\Option;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -73,5 +74,30 @@ class AdminController extends Controller
         $property->delete();
 
         return redirect()->route('admin.index')->with('success', 'Le bien à été supprimé avec succès');
+    }
+
+
+
+
+
+    public function propertyOption()
+    {
+
+        return view('admin.option', [
+            'options' => Option::all(),
+        ]);
+    }
+
+
+
+
+
+    public function deleteOption(Option $option)
+    {
+        $option->delete();
+
+       
+        return redirect()->route('admin.option')
+        ->with('success', 'Votre option a bien été supprimée !');
     }
 }

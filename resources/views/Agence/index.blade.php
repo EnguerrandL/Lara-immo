@@ -10,27 +10,20 @@
         <div class="row   mt-5">
             <h3>Nos derniers biens</h3>
             @foreach ($properties as $property)
-   
-
-
-            
-
                 <div class="card mx-auto" style="width: 18rem;">
                     <img src="{{ $property->image }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title">{{ $property->title }}</h5>
-                      <p class="card-text">{{ $property->size . ' m²'}} </p>
-                      <p class="card-text">{{'Ville : '. $property->city }} </p>
-                      <p><small><strong>{{'Prix : ' . $property->price . ' €'}}</strong></small></p>
-                      <a href="#" class="btn btn-primary">Voir ce bien</a>
+                        <h5 class="card-title">{{ $property->title }}</h5>
+                        <p class="card-text">{{ $property->size . ' m²' }} </p>
+                        <p class="card-text">{{ 'Ville : ' . $property->city }} </p>
+                        <p><small><strong>{{ 'Prix : ' . $property->price . ' €' }}</strong></small></p>
+                        
+                        <a href="{{ route('agence.show', ['slug' => $property->slug, 'property' => $property]) }}"
+                            class="btn btn-primary">Voir ce bien
+                        </a>
+
                     </div>
-                  </div>
-
-
-
-
-
-
+                </div>
             @endforeach
 
         </div>

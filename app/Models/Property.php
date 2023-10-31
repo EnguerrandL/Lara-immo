@@ -30,10 +30,7 @@ class Property extends Model
     ];
 
 
-//     public function getRouteKeyName()
-// {
-//     return 'slug'; // Remplacez 'slug' par le nom de la colonne que vous utilisez
-// }
+
 
 
     public function options()

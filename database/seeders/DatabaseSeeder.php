@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Option;
 use App\Models\Property;
 use Illuminate\Database\Seeder;
 
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Property::factory(10)->create();
+        Option::factory(10)->create();
     }
 }
