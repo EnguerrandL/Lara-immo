@@ -60,12 +60,14 @@
             <div class="col-sm">
           
                 <div class="row">
-                   
-                        <a href="" class="btn btn-warning ">Editer</a>
+                   {{-- @php
+                       dd($property->slug)
+                   @endphp --}}
+                        <a href="{{ route('admin.edit', $property) }}" class="btn btn-warning ">Editer</a>
 
                 
                    
-                    <form action="{{ route('admin.delete', $property->id) }}" method="POST">
+                    <form action="{{ route('admin.delete', $property) }}" method="POST">
                       @csrf
                       @method('DELETE')
                         <button class="btn btn-danger">Supprimer</button>

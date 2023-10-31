@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AgenceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AgenceController::class, 'index'])->name('agence.index'); 
+
+
+
 
 
 Route::prefix('admin')->group(function () {
@@ -24,6 +26,8 @@ Route::prefix('admin')->group(function () {
  Route::get('/property/create', [AdminController::class, 'create'])->name('admin.create');
  Route::post('/property/create', [AdminController::class, 'store'])->name('admin.store');
  Route::delete('/property/{property}', [AdminController::class, 'destroy'])->name('admin.delete');
+ Route::get('/property/{property}', [AdminController::class, 'edit'])->name('admin.edit');
+ Route::post('/property/{property}', [AdminController::class, 'update'])->name('admin.update');
 
 
 });

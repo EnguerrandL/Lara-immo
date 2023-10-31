@@ -45,6 +45,28 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->with('success', 'Votre bien a été ajouter avec succès !');
     }
 
+
+
+    public function edit(Property $property)
+    {
+
+
+
+        return view('admin.edit', [
+            'property' => $property
+        ]);
+    }
+
+
+    public function update(Property $property, RequestAdminForm $request)
+    {
+
+        $property->update($request->validated());
+
+        return redirect()->route('admin.index')->with('success', 'Votre bien a été éditer avec succès');
+    }
+
+
     public function destroy(Property $property)
     {
 
