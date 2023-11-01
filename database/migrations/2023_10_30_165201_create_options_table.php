@@ -16,6 +16,14 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
         });
+
+
+        Schema::create('property_option', function(Blueprint $table){
+            $table->foreignIdFor(\App\Models\Property::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Option::class)->constrained()->cascadeOnDelete();
+            $table->primary(['property_id', 'option_id']);
+
+        });
     }
 
     /**
@@ -24,5 +32,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('options');
+        Schema::dropIfExists('property_option');
     }
 };

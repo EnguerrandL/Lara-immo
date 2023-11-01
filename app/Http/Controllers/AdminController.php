@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestAdminForm;
+use App\Models\Image;
 use App\Models\Option;
 use App\Models\Property;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -35,16 +38,76 @@ class AdminController extends Controller
         ]);
     }
 
-    public function store(RequestAdminForm $request)
+    public function store(RequestAdminForm $request, Property $property)
     {
+
+      
         $request['slug'] = Str::slug($request->title);
+        // new Property($this->deleteImagesOnCascade(new Property, $request));
 
-        Property::create($request->validated());
+        $property = Property::create($request->validated());
+        
+        $property->save();
 
 
+
+        $data = $request->validated('images');
+        $imagesData = [];
+
+      if($request->file('images') != null) 
+      {
+
+    
+        
+        foreach ($request->file('images') as $imagefile) {
+            $image = new Image();
+            $path = $imagefile->store('biens', 'public');
+            $image->images = $path;
+            $image->property_id = $property->id;
+
+            $imagesData[] = $path;
+        
+            $image->save();
+        }
+
+        $data['images'] = $imagesData;
+
+    }
 
         return redirect()->route('admin.index')->with('success', 'Votre bien a été ajouter avec succès !');
     }
+
+
+
+    // private function deleteImagesOnCascade(Property $property, RequestAdminForm $request)
+    // {
+    //     $data = $request->validated();
+    //     $images = $request->input('images');
+
+    //     foreach ($images as $image) {
+    //         if ($image != null) {
+    //             // Ne faites rien ici, car vous stockerez les images plus tard.
+    //         }
+    //     }
+
+    //     if ($property->images) {
+    //         Storage::disk('public')->delete($property->images);
+    //     }
+
+    //     // Stockez les images ici s'il y en a de valides.
+    //     $uploadedImages = [];
+    //     foreach ($images as $image) {
+    //         if ($image != null) {
+    //             $filename = Carbon::now()->timestamp . '_' . uniqid();
+    //             $path = $image->store('biens', 'public');
+    //             $uploadedImages[] = $path;
+    //         }
+    //     }
+
+    //     $data['images'] = $uploadedImages;
+
+    //     return $data;
+    // }
 
 
 
@@ -54,13 +117,16 @@ class AdminController extends Controller
 
 
         return view('admin.edit', [
-            'property' => $property
+            'property' => $property,
+            'propertyImg' => Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->get()
         ]);
     }
 
 
     public function update(Property $property, RequestAdminForm $request)
     {
+
+       
 
         $property->update($request->validated());
 
@@ -96,8 +162,8 @@ class AdminController extends Controller
     {
         $option->delete();
 
-       
+
         return redirect()->route('admin.option')
-        ->with('success', 'Votre option a bien été supprimée !');
+            ->with('success', 'Votre option a bien été supprimée !');
     }
 }

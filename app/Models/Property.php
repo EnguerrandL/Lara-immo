@@ -15,7 +15,6 @@ class Property extends Model
         'title',
         'description',
         'adress',
-        'image',
         'slug',
         'city',
         'size',
@@ -26,6 +25,7 @@ class Property extends Model
         'floor',
         'updated_at',
         'created_at',
+        'property_id',
        
     ];
 
@@ -36,5 +36,9 @@ class Property extends Model
     public function options()
     {
         return $this->hasMany(Option::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }

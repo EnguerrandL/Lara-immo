@@ -17,6 +17,6 @@ class Option extends Model
     public function properties()
     {
 
-        $this->hasMany(Property::class);
+        $this->belongsToMany(Property::class);
     }
 }

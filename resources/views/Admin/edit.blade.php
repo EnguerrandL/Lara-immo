@@ -115,7 +115,21 @@
 
                             <div>
 
+                                {{-- @php
+                                    dd($propertyImg);
+                                @endphp --}}
                                 <label for="image">Photo(s) du bien</label>
+                                @foreach ($propertyImg as $img)
+
+
+                                <img class="img-thumbnail"  src="{{ asset($img->imgUrl()) }}" alt="Image">
+                                @endforeach
+                               
+
+
+
+
+                               
                                 <input class="form-control" type="file" name="image" multiple>
                             </div>
                         </div>

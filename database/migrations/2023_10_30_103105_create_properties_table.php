@@ -16,7 +16,6 @@ return new class extends Migration
             $table->timestamps();
             $table->boolean('isAvailable')->nullable();
             $table->string('title');
-            $table->string('image')->nullable();
             $table->string('adress');
             $table->longText('description');
             $table->string('slug')->nullable();

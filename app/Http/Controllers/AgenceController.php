@@ -34,7 +34,8 @@ class AgenceController extends Controller
 
 
         return view('agence.show',  [
-            'property' => $property
+            'property' => $property,
+            'slug' => $property->slug
         ]);
 
     }

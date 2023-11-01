@@ -21,7 +21,7 @@ class PropertyFactory extends Factory
             'title' => fake()->name(),
             'description' => fake()->text(100),
             'adress' => fake()->streetAddress(),
-            'image' => fake()->imageUrl( 640, 480),
+            // 'images' => fake()->imageUrl( 640, 480),
             'slug' => fake()->slug(),
             'city' => fake()->city(),
             'size' => fake()->numberBetween('20', '200'),

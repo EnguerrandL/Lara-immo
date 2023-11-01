@@ -22,7 +22,7 @@
 
 
         <div class="container col-10 mx-auto">
-            <form method="POST" action="{{ route('admin.store') }}">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('admin.store') }}">
 
                 @csrf
                 <div class="container">
@@ -104,7 +104,7 @@
                             <div>
 
                                 <label for="image">Photo(s) du bien</label>
-                                <input class="form-control" type="file" name="image" multiple>
+                                <input class="form-control" type="file" name="images[]"   multiple>
                             </div>
                         </div>
                     </div>
