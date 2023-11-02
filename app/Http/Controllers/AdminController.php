@@ -28,8 +28,8 @@ class AdminController extends Controller
     public function create()
     {
 
-        $properties = new Property();
-        $properties->fill([
+        $property = new Property();
+        $property->fill([
             'size' => 40,
             'room' => 1,
             'part' => 2, 
@@ -39,7 +39,7 @@ class AdminController extends Controller
         ]);
 
         return view('admin.create', [
-            'properties' =>$properties,
+            'property' =>$property,
         ]);
     }
 
@@ -78,7 +78,8 @@ class AdminController extends Controller
 
     }
 
-        return redirect()->route('admin.index')->with('success', 'Votre bien a été ajouter avec succès !');
+        return redirect()->route('admin.index')
+        ->with(['success' => 'Votre bien : ' . $property->title . ' a été ajouté avec succés', 'alert-class' => 'success'  ]);
     }
 
 
@@ -134,16 +135,22 @@ class AdminController extends Controller
 
         $property->update($request->validated());
 
-        return redirect()->route('admin.index')->with('success', 'Votre bien a été éditer avec succès');
+        return redirect()->route('admin.index')
+        ->with(['success' => 'Votre bien : ' . $property->title . ' a été modifié avec succés', 
+        'alert-class' => 'warning'  ]);
+        
+   
     }
 
 
     public function destroy(Property $property)
     {
-
+        $getTitlebeforeDelete = $property->title; 
         $property->delete();
 
-        return redirect()->route('admin.index')->with('success', 'Le bien à été supprimé avec succès');
+        return redirect()->route('admin.index')
+        ->with(['success' => 'Votre bien : '  . $getTitlebeforeDelete . '  a été supprimé avec succés', 'alert-class' => 'danger'  ]);
+       
     }
 
 

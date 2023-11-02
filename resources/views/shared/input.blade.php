@@ -2,11 +2,11 @@
 @php
 
 
-$type ?? = 'text';
-$class ?? = null; 
-$name ?? = '';
-$value ?? = '';
-$label ?? = ucfirst($name); 
+$type ??= 'text';
+$class ??= null; 
+$name ??= '';
+$value ??= '';
+$label ??= ucfirst($name); 
 
 @endphp
 
