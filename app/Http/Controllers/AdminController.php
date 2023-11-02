@@ -154,6 +154,21 @@ class AdminController extends Controller
     }
 
 
+        public function deleteImgFromProperty(Property $property){
+
+            dd( Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->delete());
+           
+  
+
+                //     if (!$image) {
+                //     return redirect()->back()
+                //     ->with(['success' => 'Image non trouvée', 'alert-class' => 'warning'  ]);
+                // }
+
+            return redirect()->route('admin.edit')
+            ->with(['success' => 'Image supprimée avec succès', 'alert-class' => 'danger'  ]);
+        }
+
 
 
 

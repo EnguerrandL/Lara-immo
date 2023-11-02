@@ -105,9 +105,19 @@
             'value' => $property->isAvailable,
         ])
 
+
+
+
+        @include('shared.img', [
+            'label' => 'images',
+            'name' => 'images[]',
+            'class' => 'col-5 l'
+          
+        ])
+
         <div>
 
-            <button class="btn btn-primary">
+            <button class="btn btn-primary mb-5 mt-5">
                 @if ($property->exists)
                     Modifier le bien
                 @else
