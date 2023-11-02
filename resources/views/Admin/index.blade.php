@@ -11,7 +11,7 @@
 
     <div class="container">
         <div class="mt-3 mb-3 d-flex justify-content-between">
-            <h1>Gérer les biens</h1>
+            <h1> @yield('title')</h1>
             <a href="{{ route('admin.create')}}" class="btn btn-primary ">Ajouter un bien</a>
            
         </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-sm">
               
-                <li class="list-group">{{$property->price . ' $'}}</li>
+                <li class="list-group">{{number_format( $property->price, thousands_separator: '  ' ) . ' €'}}</li>
             </div>
             <div class="col-sm">
                
@@ -80,6 +80,7 @@
         @endforeach
     </div>
 
+    {{-- {{ $properties->links() }} --}}
 
 
 @endsection

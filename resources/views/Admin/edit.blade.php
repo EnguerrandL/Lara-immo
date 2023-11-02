@@ -122,6 +122,7 @@
                                 @foreach ($propertyImg as $img)
 
 
+                               
                                 <img class="img-thumbnail"  src="{{ asset($img->imgUrl()) }}" alt="Image">
                                 @endforeach
                                

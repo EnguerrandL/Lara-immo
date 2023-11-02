@@ -18,11 +18,8 @@ class AdminController extends Controller
     {
 
 
-
-
-
         return view('admin.index',  [
-            'properties' =>  Property::all(),
+            'properties' =>  Property::orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')->get()
         ]);
     }
 
@@ -31,23 +28,30 @@ class AdminController extends Controller
     public function create()
     {
 
-        $properties = Property::all();
+        $properties = new Property();
+        $properties->fill([
+            'size' => 40,
+            'room' => 1,
+            'part' => 2, 
+            'city' => 'Avignon',
+            'zipcode' => 84000,
+            'isAvailable' => false
+        ]);
 
         return view('admin.create', [
-            'properties' => $properties,
+            'properties' =>$properties,
         ]);
     }
 
     public function store(RequestAdminForm $request, Property $property)
     {
 
-      
-        $request['slug'] = Str::slug($request->title);
-        // new Property($this->deleteImagesOnCascade(new Property, $request));
 
-        $property = Property::create($request->validated());
-        
-        $property->save();
+        $validatedData = $request->validated();
+
+        $validatedData['slug'] = Str::slug($request->title); 
+
+        $property = Property::create($validatedData);
 
 
 
