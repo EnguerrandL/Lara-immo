@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
 
         Property::factory(10)->create();
         Option::factory(10)->create();
-        Image::factory(10)->create();
+        // Image::factory(10)->create();
     }
 }

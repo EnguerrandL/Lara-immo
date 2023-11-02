@@ -38,6 +38,6 @@ Route::prefix('admin')->group(function () {
  Route::delete('/option{option}', [AdminController::class, 'deleteOption'])->name('admin.option.delete');
 
 
- Route::delete('/property/{property}/{image}', [AdminController::class, 'deleteImgFromProperty'])->name('admin.delete.img');
+ Route::get('/property/{property}/{image}/delete', [AdminController::class, 'deleteImgFromProperty'])->name('admin.img.delete');
 
 });

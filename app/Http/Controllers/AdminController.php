@@ -32,14 +32,14 @@ class AdminController extends Controller
         $property->fill([
             'size' => 40,
             'room' => 1,
-            'part' => 2, 
+            'part' => 2,
             'city' => 'Avignon',
             'zipcode' => 84000,
             'isAvailable' => false
         ]);
 
         return view('admin.create', [
-            'property' =>$property,
+            'property' => $property,
         ]);
     }
 
@@ -49,7 +49,7 @@ class AdminController extends Controller
 
         $validatedData = $request->validated();
 
-        $validatedData['slug'] = Str::slug($request->title); 
+        $validatedData['slug'] = Str::slug($request->title);
 
         $property = Property::create($validatedData);
 
@@ -58,28 +58,26 @@ class AdminController extends Controller
         $data = $request->validated('images');
         $imagesData = [];
 
-      if($request->file('images') != null) 
-      {
+        if ($request->file('images') != null) {
 
-    
-        
-        foreach ($request->file('images') as $imagefile) {
-            $image = new Image();
-            $path = $imagefile->store('biens', 'public');
-            $image->images = $path;
-            $image->property_id = $property->id;
 
-            $imagesData[] = $path;
-        
-            $image->save();
+
+            foreach ($request->file('images') as $imagefile) {
+                $image = new Image();
+                $path = $imagefile->store('biens', 'public');
+                $image->images = $path;
+                $image->property_id = $property->id;
+
+                $imagesData[] = $path;
+
+                $image->save();
+            }
+
+            $data['images'] = $imagesData;
         }
 
-        $data['images'] = $imagesData;
-
-    }
-
         return redirect()->route('admin.index')
-        ->with(['success' => 'Votre bien : ' . $property->title . ' a été ajouté avec succés', 'alert-class' => 'success'  ]);
+            ->with(['success' => 'Votre bien : ' . $property->title . ' a été ajouté avec succés', 'alert-class' => 'success']);
     }
 
 
@@ -131,43 +129,74 @@ class AdminController extends Controller
     public function update(Property $property, RequestAdminForm $request)
     {
 
-       
+
+
+
+
+        $data = $request->validated('images');
+        $imagesData = [];
+
+        if ($request->file('images') != null) {
+
+
+
+            foreach ($request->file('images') as $imagefile) {
+                $image = new Image();
+                $path = $imagefile->store('biens', 'public');
+                $image->images = $path;
+                $image->property_id = $property->id;
+
+                $imagesData[] = $path;
+
+                $image->save();
+            }
+
+            $data['images'] = $imagesData;
+        }
+
+
 
         $property->update($request->validated());
 
+
+
+
+
         return redirect()->route('admin.index')
-        ->with(['success' => 'Votre bien : ' . $property->title . ' a été modifié avec succés', 
-        'alert-class' => 'warning'  ]);
-        
-   
+            ->with([
+                'success' => 'Votre bien : ' . $property->title . ' a été modifié avec succés',
+                'alert-class' => 'warning'
+            ]);
     }
 
 
     public function destroy(Property $property)
     {
-        $getTitlebeforeDelete = $property->title; 
+        $getTitlebeforeDelete = $property->title;
         $property->delete();
 
         return redirect()->route('admin.index')
-        ->with(['success' => 'Votre bien : '  . $getTitlebeforeDelete . '  a été supprimé avec succés', 'alert-class' => 'danger'  ]);
-       
+            ->with(['success' => 'Votre bien : '  . $getTitlebeforeDelete . '  a été supprimé avec succés', 'alert-class' => 'danger']);
     }
 
 
-        public function deleteImgFromProperty(Property $property){
+    public function deleteImgFromProperty(Property $property, $image_id)
+    {
+        $image = Image::find($image_id);
+     
 
-            dd( Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->delete());
-           
-  
+        if ($image->property_id === $property->id){
+            // dd($image);
 
-                //     if (!$image) {
-                //     return redirect()->back()
-                //     ->with(['success' => 'Image non trouvée', 'alert-class' => 'warning'  ]);
-                // }
+            $image->delete();
 
-            return redirect()->route('admin.edit')
-            ->with(['success' => 'Image supprimée avec succès', 'alert-class' => 'danger'  ]);
+            Storage::disk('public')->delete($image->images);
         }
+ 
+
+        return redirect()->back()
+            ->with(['success' => 'Image supprimée avec succès', 'alert-class' => 'danger']);
+    }
 
 
 

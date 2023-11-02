@@ -11,6 +11,7 @@
 
         @csrf
         @method($property->exists ? 'POST' : 'POST')
+     
 
 
 
@@ -108,23 +109,23 @@
 
 
 
-        @include('shared.img', [
-            'label' => 'images',
-            'name' => 'images[]',
-            'class' => 'col-5 l'
-          
-        ])
+@include('shared.img')
+
+    
 
         <div>
 
-            <button class="btn btn-primary mb-5 mt-5">
-                @if ($property->exists)
-                    Modifier le bien
-                @else
-                    Ajouter un bien
-                @endif
-            </button>
+       <div class="container">
 
+        <button class="btn btn-primary mb-5 mt-5">
+            @if ($property->exists)
+                Modifier le bien
+            @else
+                Ajouter un bien
+            @endif
+        </button>
+
+       </div>
 
         </div>
 
