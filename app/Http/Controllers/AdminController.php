@@ -184,12 +184,8 @@ class AdminController extends Controller
     {
         $image = Image::find($image_id);
      
-
         if ($image->property_id === $property->id){
-            // dd($image);
-
             $image->delete();
-
             Storage::disk('public')->delete($image->images);
         }
  
