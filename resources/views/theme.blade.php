@@ -25,7 +25,7 @@
                     <a class="nav-link  text-white" href="{{ route('admin.index') }}">Gérer les biens </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link  text-white" href="{{ route('admin.option') }}">Gérer les options</a>
+                    <a class="nav-link  text-white" href="{{ route('admin.option.show') }}">Gérer les options</a>
                 </li>
             </ul>
 

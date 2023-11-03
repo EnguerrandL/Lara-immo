@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestAdminForm;
+use App\Http\Requests\RequestOptionForm;
 use App\Models\Image;
 use App\Models\Option;
 use App\Models\Property;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\Return_;
 
 class AdminController extends Controller
 {
@@ -183,12 +185,12 @@ class AdminController extends Controller
     public function deleteImgFromProperty(Property $property, $image_id)
     {
         $image = Image::find($image_id);
-     
-        if ($image->property_id === $property->id){
+
+        if ($image->property_id === $property->id) {
             $image->delete();
             Storage::disk('public')->delete($image->images);
         }
- 
+
 
         return redirect()->back()
             ->with(['success' => 'Image supprimée avec succès', 'alert-class' => 'danger']);
@@ -197,11 +199,44 @@ class AdminController extends Controller
 
 
 
-    public function propertyOption()
+    public function showOption()
     {
 
         return view('admin.option', [
-            'options' => Option::all(),
+            'options' => Option::orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
+    public function optionStore(RequestOptionForm $request)
+    {
+
+        $option =    Option::create($request->validated());
+        $option->save();
+        $name =  $option->name;
+
+        return redirect()->back()->with(['success' => 'L\'option ' . $name .  ' a été ajoutée avec succès', 'alert-class' => 'success']);
+    }
+
+    public function optionUpdate(RequestOptionForm $request, Option $option)
+    {
+
+
+
+        $oldData = $option->name;
+        $option->update($request->validated());
+        $newData = $option->name;
+
+        return redirect()->route('admin.option.show')->with([
+            'success' => 'L\'option ' . $oldData . ' a été remplacer par ' . $newData . ' avec succès',
+            'alert-class' => 'warning'
+        ]);
+    }
+
+    public function editOption(Option $option)
+    {
+
+        return view('admin.optionedit', [
+            'option' => $option,
         ]);
     }
 
@@ -209,12 +244,15 @@ class AdminController extends Controller
 
 
 
+
+
     public function deleteOption(Option $option)
     {
+        $name = $option->name;
         $option->delete();
 
 
-        return redirect()->route('admin.option')
-            ->with('success', 'Votre option a bien été supprimée !');
+        return redirect()->back()
+            ->with(['success' => 'L\'option ' . $name . ' a été supprimée avec succès', 'alert-class' => 'danger']);
     }
 }

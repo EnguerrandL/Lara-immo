@@ -9,7 +9,10 @@
     <div class="container col-6">
 
         <h1 class="mt-5 mb-5 text-center">Gérer les options de vos biens</h1>
-        <form class="mt-5 mb-5" action="{{ route('admin.option.store')}}" method="POST">
+        <form class="mt-5 mb-5" action="{{ route('option.store')}}" method="POST">
+       
+      @csrf
+
             <div class="col-4 mx-auto ">
           <label class="text-primary form-label" for="name">Ajouter une option</label>
                 <input class="form-control" type="text" name="name">
@@ -46,7 +49,7 @@
 
                 <div class="row">
 
-                    <a href="" class="btn btn-warning ">Editer</a>
+                    <a href="{{ route('option.edit', $option->id) }}" class="btn btn-warning ">Editer</a>
 
                     <form action="{{ route('admin.option.delete', $option->id) }}" method="POST">
                         @csrf
