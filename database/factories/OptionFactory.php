@@ -18,6 +18,7 @@ class OptionFactory extends Factory
     {
         return [
             'name' => fake()->word(),
+            
         ];
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
         });
 
 
-        Schema::create('property_option', function(Blueprint $table){
+        Schema::create('option_property', function(Blueprint $table){
             $table->foreignIdFor(\App\Models\Property::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Option::class)->constrained()->cascadeOnDelete();
             $table->primary(['property_id', 'option_id']);

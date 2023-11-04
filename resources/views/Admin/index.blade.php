@@ -30,6 +30,9 @@
                 <strong>Ville </strong>
               </div>
               <div class="col">
+                <strong>Options </strong>
+              </div>
+              <div class="col">
                 <strong>Actions</strong>
               </div>
             </div>
@@ -58,6 +61,12 @@
                 <li class="list-group">{{$property->city }}</li>
             </div>
             <div class="col-sm">
+              @foreach ($property->options as $option)
+              <li class="list-group">{{$option->name }}</li>
+              @endforeach
+            </div>
+
+            <div class="col-sm">
           
                 <div class="row">
                    {{-- @php
@@ -77,6 +86,7 @@
             </div>
           
         </div>
+        <hr>
         @endforeach
     </div>
 

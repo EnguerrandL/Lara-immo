@@ -11,7 +11,8 @@ class Option extends Model
 
 
     protected $fillable = [
-        'name'
+        'name',
+
     ];
 
     public function properties()

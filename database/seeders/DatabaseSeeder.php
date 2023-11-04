@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Image;
 use App\Models\Option;
 use App\Models\Property;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +26,17 @@ class DatabaseSeeder extends Seeder
 
         Property::factory(10)->create();
         Option::factory(10)->create();
+
+        // for ($i = 1; $i <= 50; $i++) {
+        //     $property_id = rand(1, 10); // Remplacez 10 par le nombre total de propriétés
+        //     $option_id = rand(1, 10); // Remplacez 10 par le nombre total d'options
+
+        //     DB::table('property_option')->insert([
+        //         'property_id' => $property_id,
+        //         'option_id' => $option_id,
+        //     ]);
+        // }
+        
         // Image::factory(10)->create();
     }
 }

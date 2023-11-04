@@ -30,6 +30,9 @@ class PropertyFactory extends Factory
             'room' => fake()->numberBetween('1', '5'),
             'part' => fake()->numberBetween('2', '5'),
             'floor' => fake()->numberBetween('1', '3'),
+
+
+            
             
         ];
 

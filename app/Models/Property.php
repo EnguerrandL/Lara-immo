@@ -26,6 +26,9 @@ class Property extends Model
         'updated_at',
         'created_at',
         'property_id',
+        'options_id',
+
+ 
        
     ];
 
@@ -35,9 +38,11 @@ class Property extends Model
 
     public function options()
     {
-        return $this->hasMany(Option::class);
+        return $this->belongsToMany(Option::class);
     }
     public function images()
+
+
     {
         return $this->hasMany(Image::class);
     }

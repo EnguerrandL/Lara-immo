@@ -105,6 +105,8 @@
             'name' => 'isAvailable',
             'value' => $property->isAvailable,
         ])
+        
+        @include('shared.multiselect')
 
 
 

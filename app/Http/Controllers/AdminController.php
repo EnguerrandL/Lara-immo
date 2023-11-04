@@ -19,9 +19,9 @@ class AdminController extends Controller
     public function index()
     {
 
-
         return view('admin.index',  [
-            'properties' =>  Property::orderBy('created_at', 'desc')->orderBy('updated_at', 'desc')->get()
+            'properties' =>  Property::orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->get(),
+            'options' => Property::with('options')->get()
         ]);
     }
 
@@ -42,19 +42,19 @@ class AdminController extends Controller
 
         return view('admin.create', [
             'property' => $property,
+            'options' => Option::all()
         ]);
     }
 
     public function store(RequestAdminForm $request, Property $property)
     {
-
+ 
 
         $validatedData = $request->validated();
 
         $validatedData['slug'] = Str::slug($request->title);
 
         $property = Property::create($validatedData);
-
 
 
         $data = $request->validated('images');
@@ -77,6 +77,12 @@ class AdminController extends Controller
 
             $data['images'] = $imagesData;
         }
+
+        $property->save();
+
+
+      $property->options()->sync($request->validated('name'));
+  
 
         return redirect()->route('admin.index')
             ->with(['success' => 'Votre bien : ' . $property->title . ' a été ajouté avec succés', 'alert-class' => 'success']);
@@ -119,11 +125,10 @@ class AdminController extends Controller
     public function edit(Property $property)
     {
 
-
-
         return view('admin.edit', [
             'property' => $property,
-            'propertyImg' => Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->get()
+            'propertyImg' => Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->get(),
+            'options' => Option::all()
         ]);
     }
 
@@ -160,7 +165,9 @@ class AdminController extends Controller
 
         $property->update($request->validated());
 
+        $property->options()->sync($request->validated('name'));
 
+        $property->save();
 
 
 
