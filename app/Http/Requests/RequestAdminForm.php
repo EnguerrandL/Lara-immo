@@ -26,7 +26,7 @@ class RequestAdminForm extends FormRequest
             'isAvailable' =>  ['nullable'],
             'description' =>  ['required'],
             'adress' =>  ['required'],
-            'images' =>  ['nullable'],
+            'images' =>  ['nullable', 'max:3'],
             'slug' =>  ['nullable'],
             'city' =>  ['required'],
             'size' =>  ['required'],

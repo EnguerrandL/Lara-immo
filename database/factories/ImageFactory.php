@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,8 +23,27 @@ class ImageFactory extends Factory
 
 
         return [
-            'images' => fake()->image('public/storage/biens',640, 480),
+            'images' => fake()->imageUrl(640, 480),
             'property_id' => fake()->numberBetween('1', '10')
         ];
+    }
+
+
+
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Image $image) {
+            $property = $image->property;
+            $imageCount = $property->images->count();
+
+            // Si le nombre d'images dépasse 3, supprimez les images supplémentaires
+            if ($imageCount > 3) {
+                $imagesToDelete = $property->images->slice(3);
+                foreach ($imagesToDelete as $imageToDelete) {
+                    $imageToDelete->delete();
+                }
+            }
+        });
     }
 }

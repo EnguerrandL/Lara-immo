@@ -1,5 +1,5 @@
 @extends('theme')
-@section('title', $property->exists ? 'Éditer votre bien' : 'Ajouter un bien')
+@section('title', $property->exists ? 'Éditer votre bien : ' . $property->title : 'Ajouter un bien')
 
 @section('content')
 
@@ -16,6 +16,11 @@
 
 
         <div class="row">
+            @include('shared.checkbox', [
+                'label' => 'Vendu',
+                'name' => 'isAvailable',
+                'value' => $property->isAvailable,
+            ])
 
             @include('shared.input', [
                 'class' => 'col',
@@ -26,12 +31,14 @@
             <div class="col row">
 
                 @include('shared.input', [
+                     'label' => 'Surface',
                     'class' => 'col',
                     'name' => 'size',
                     'value' => $property->size,
                 ])
 
                 @include('shared.input', [
+                     'label' => 'Prix',
                     'class' => 'col',
                     'name' => 'price',
                     'value' => $property->price,
@@ -100,11 +107,7 @@
 
         </div>
 
-        @include('shared.checkbox', [
-            'label' => 'Vendu',
-            'name' => 'isAvailable',
-            'value' => $property->isAvailable,
-        ])
+  
         
         @include('shared.multiselect')
 

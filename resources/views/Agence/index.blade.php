@@ -11,7 +11,13 @@
             <h3>Nos derniers biens</h3>
             @foreach ($properties as $property)
                 <div class="card mx-auto" style="width: 18rem;">
-                    <img src="{{ $property->image }}" class="card-img-top" alt="...">
+
+                    @foreach ($property->images->take(1) as $img)
+                        
+                   
+                    <img src="{{ $img->images }}" class="card-img-top" alt="...">
+
+                    @endforeach
                     <div class="card-body">
                         <h5 class="card-title">{{ $property->title }}</h5>
                         <p class="card-text">{{ $property->size . ' m²' }} </p>

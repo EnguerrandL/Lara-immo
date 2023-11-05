@@ -28,8 +28,8 @@ class Property extends Model
         'property_id',
         'options_id',
 
- 
-       
+
+
     ];
 
 
@@ -40,8 +40,9 @@ class Property extends Model
     {
         return $this->belongsToMany(Option::class);
     }
-    public function images()
 
+
+    public function images()
 
     {
         return $this->hasMany(Image::class);

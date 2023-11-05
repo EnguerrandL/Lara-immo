@@ -18,6 +18,8 @@ class AgenceController extends Controller
 
         return view('agence.index', [
             'properties' => $properties,
+            'images' => Property::with('images')->get(),
+           
         ]);
     }
 

@@ -16,16 +16,24 @@
 
       
 
-            @if (isset($propertyImg))
+            @if (isset($property->images))
 
             <div class="container">
                 <div class="row">
-                @foreach ($propertyImg as $img)
-                  
+                {{-- @foreach ($propertyImg as $img) --}}
+                @foreach ($property->images as $img)
                         <div class="col-md-4">
                             <div class="thumbnail">
 
-                                <img src="{{ asset($img->imgUrl()) }}" alt="" style="width:100%">
+
+                              
+                        
+                   
+                                <img src="{{ $img->images }}" class="card-img-top" alt="...">
+            
+                          
+
+                                {{-- <img src="{{ asset($img->imgUrl()) }}" alt="" style="width:100%"> --}}
                                 <input type="hidden" name="image_id" value="{{ $img->id }}">
 
                                 <a class="btn btn-danger"
@@ -40,8 +48,8 @@
 
                             </div>
                         </div>
-                       
-                @endforeach
+                        @endforeach   
+                {{-- @endforeach --}}
             </div>
         </div>
        

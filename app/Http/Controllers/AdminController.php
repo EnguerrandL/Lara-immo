@@ -128,6 +128,7 @@ class AdminController extends Controller
         return view('admin.edit', [
             'property' => $property,
             'propertyImg' => Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->get(),
+            'images' => Property::with('images')->get(),
             'options' => Option::all()
         ]);
     }

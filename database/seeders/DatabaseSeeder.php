@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 
         Property::factory(10)->create();
         Option::factory(10)->create();
+        Image::factory(50)->create();
 
         // for ($i = 1; $i <= 50; $i++) {
         //     $property_id = rand(1, 10); // Remplacez 10 par le nombre total de propriétés
