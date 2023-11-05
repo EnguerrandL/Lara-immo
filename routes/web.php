@@ -26,6 +26,8 @@ Route::get('/tous-nos-biens', [AgenceController::class, 'listing'])->name('agenc
 
 
 
+Route::get('/search', [AgenceController::class, 'search'])->name('agence.search');
+
 
 
 Route::prefix('admin')->group(function () {

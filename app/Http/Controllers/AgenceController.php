@@ -36,6 +36,53 @@ class AgenceController extends Controller
     }
 
 
+    public function search(Request $request)
+    {
+
+        $surface = $request->surface;
+        $parts = $request->parts;
+        $searchPrice = $request->price;
+        $search = $request->search;
+
+        $properties = Property::query();
+
+        // dd($properties);
+
+        if (!empty($surface)) {
+            $properties->where('size', '>=', $surface);
+        }
+        
+        
+        if(!empty($parts)){
+            $properties->where('part', '>=', $parts);
+        }
+
+        if (!empty($searchPrice)) {
+            $properties->where('price', '<=', $searchPrice);
+        }
+
+
+        if (!empty($search)) {
+            $properties->where('title', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orWhere('city', 'like', "%$search%")
+                ->orWhereHas('options', function ($subQuery) use ($search) {
+                    $subQuery->where('name', 'like', "%$search");
+                });
+                
+        }
+
+
+        $properties = $properties->get();
+
+
+        return view('agence.listing', [
+           
+            'properties' => $properties
+        ]);
+    }
+
+
     public function show(String $slug, Property $property)
     {
 
