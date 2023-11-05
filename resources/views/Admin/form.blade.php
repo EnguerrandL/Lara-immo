@@ -17,7 +17,7 @@
 
         <div class="row">
             @include('shared.checkbox', [
-                'label' => 'Vendu',
+                'label' => 'Disponible ?',
                 'name' => 'isAvailable',
                 'value' => $property->isAvailable,
             ])

@@ -76,10 +76,7 @@ class AgenceController extends Controller
         $properties = $properties->get();
 
 
-        return view('agence.listing', [
-           
-            'properties' => $properties
-        ]);
+        return view('agence.listing', compact('properties', 'surface') );
     }
 
 
