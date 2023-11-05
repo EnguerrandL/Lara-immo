@@ -22,7 +22,7 @@
                         <h5 class="card-title">{{ $property->title }}</h5>
                         <p class="card-text">{{ $property->size . ' m²' }} </p>
                         <p class="card-text">{{ 'Ville : ' . $property->city }} </p>
-                        <p><small><strong>{{ 'Prix : ' . $property->price . ' €' }}</strong></small></p>
+                        <p><small><strong>{{  'Prix : ' . number_format($property->price, thousands_separator: '  ') . ' €' }}</strong></small></p>
                         
                         <a href="{{ route('agence.show', ['slug' => $property->slug, 'property' => $property]) }}"
                             class="btn btn-primary">Voir ce bien

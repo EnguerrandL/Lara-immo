@@ -32,6 +32,10 @@ class AdminController extends Controller
 
         $property = new Property();
         $property->fill([
+            'title' => 'Nom du bien',
+            'description' => 'Il faut bien le vendre ce bien : ) ',
+            'adress' => '36 rue des jardins',
+            'price' => 100000,
             'size' => 40,
             'room' => 1,
             'part' => 2,
@@ -48,7 +52,7 @@ class AdminController extends Controller
 
     public function store(RequestAdminForm $request, Property $property)
     {
- 
+
 
         $validatedData = $request->validated();
 
@@ -81,8 +85,8 @@ class AdminController extends Controller
         $property->save();
 
 
-      $property->options()->sync($request->validated('name'));
-  
+        $property->options()->sync($request->validated('name'));
+
 
         return redirect()->route('admin.index')
             ->with(['success' => 'Votre bien : ' . $property->title . ' a été ajouté avec succés', 'alert-class' => 'success']);
@@ -124,7 +128,6 @@ class AdminController extends Controller
 
     public function edit(Property $property)
     {
-
         return view('admin.edit', [
             'property' => $property,
             'propertyImg' => Image::select('property_id', 'id', 'images')->where('property_id', $property->id)->get(),
@@ -137,17 +140,10 @@ class AdminController extends Controller
     public function update(Property $property, RequestAdminForm $request)
     {
 
-
-
-
-
         $data = $request->validated('images');
         $imagesData = [];
 
         if ($request->file('images') != null) {
-
-
-
             foreach ($request->file('images') as $imagefile) {
                 $image = new Image();
                 $path = $imagefile->store('biens', 'public');
@@ -162,15 +158,9 @@ class AdminController extends Controller
             $data['images'] = $imagesData;
         }
 
-
-
         $property->update($request->validated());
-
         $property->options()->sync($request->validated('name'));
-
         $property->save();
-
-
 
         return redirect()->route('admin.index')
             ->with([
@@ -193,12 +183,10 @@ class AdminController extends Controller
     public function deleteImgFromProperty(Property $property, $image_id)
     {
         $image = Image::find($image_id);
-
         if ($image->property_id === $property->id) {
             $image->delete();
             Storage::disk('public')->delete($image->images);
         }
-
 
         return redirect()->back()
             ->with(['success' => 'Image supprimée avec succès', 'alert-class' => 'danger']);
@@ -209,7 +197,6 @@ class AdminController extends Controller
 
     public function showOption()
     {
-
         return view('admin.option', [
             'options' => Option::orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->get(),
         ]);
@@ -217,19 +204,17 @@ class AdminController extends Controller
 
     public function optionStore(RequestOptionForm $request)
     {
-
         $option =    Option::create($request->validated());
         $option->save();
         $name =  $option->name;
 
-        return redirect()->back()->with(['success' => 'L\'option ' . $name .  ' a été ajoutée avec succès', 'alert-class' => 'success']);
+        return redirect()
+            ->back()
+            ->with(['success' => 'L\'option ' . $name .  ' a été ajoutée avec succès', 'alert-class' => 'success']);
     }
 
     public function optionUpdate(RequestOptionForm $request, Option $option)
     {
-
-
-
         $oldData = $option->name;
         $option->update($request->validated());
         $newData = $option->name;
@@ -242,7 +227,6 @@ class AdminController extends Controller
 
     public function editOption(Option $option)
     {
-
         return view('admin.optionedit', [
             'option' => $option,
         ]);

@@ -31,19 +31,5 @@ class ImageFactory extends Factory
 
 
 
-    public function configure()
-    {
-        return $this->afterCreating(function (Image $image) {
-            $property = $image->property;
-            $imageCount = $property->images->count();
 
-            // Si le nombre d'images dépasse 3, supprimez les images supplémentaires
-            if ($imageCount > 3) {
-                $imagesToDelete = $property->images->slice(3);
-                foreach ($imagesToDelete as $imageToDelete) {
-                    $imageToDelete->delete();
-                }
-            }
-        });
-    }
 }

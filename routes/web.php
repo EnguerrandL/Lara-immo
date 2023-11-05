@@ -22,6 +22,7 @@ Route::get('/biens/{slug}-{property}', [AgenceController::class, 'show'])->name(
     'slug' => $slugRegex,
     'property' => $idRegex,
 ]); 
+Route::get('/tous-nos-biens', [AgenceController::class, 'listing'])->name('agence.listing');
 
 
 

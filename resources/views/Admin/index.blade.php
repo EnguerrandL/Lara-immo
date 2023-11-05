@@ -43,7 +43,7 @@
                             <td>
                                 <a href="{{ route('admin.edit', $property) }}" class="btn btn-warning ">Editer</a>
 
-                                <form action="{{ route('admin.delete', $property) }}" method="POST">
+                                <form  class="mt-2" action="{{ route('admin.delete', $property) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger">Supprimer</button>

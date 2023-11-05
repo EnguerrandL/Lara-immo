@@ -19,19 +19,30 @@ class AgenceController extends Controller
         return view('agence.index', [
             'properties' => $properties,
             'images' => Property::with('images')->get(),
-           
+
         ]);
     }
 
 
 
+    public function listing()
+    {
+
+
+        return view('agence.listing', [
+            'properties' => Property::all(),
+            'images' => Property::with('images')->get(),
+        ]);
+    }
+
+
     public function show(String $slug, Property $property)
     {
-       
+
         $checkSlug = $property->slug;
 
-        if($slug != $checkSlug){
-            return to_route('agence.show', ['slug' => $checkSlug, 'property' => $property ]);
+        if ($slug != $checkSlug) {
+            return to_route('agence.show', ['slug' => $checkSlug, 'property' => $property]);
         }
 
 
@@ -39,12 +50,5 @@ class AgenceController extends Controller
             'property' => $property,
             'slug' => $property->slug
         ]);
-
     }
-
-
-
-    
-
-
 }
