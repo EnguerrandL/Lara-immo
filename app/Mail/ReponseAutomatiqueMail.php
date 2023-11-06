@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PropertyContactMail extends Mailable
+class ReponseAutomatiqueMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,9 +29,7 @@ class PropertyContactMail extends Mailable
     {
         return new Envelope(
             to: 'enguerrand@netmedia.fr',
-            subject: 'Une nouvelle demande est arrivée à propos du bien' . $this->property->title,
-         
-           
+            subject: 'Reponse Automatique  : concernant votre demande pour le bien : ' .  $this->property->title
         );
     }
 
@@ -41,7 +39,7 @@ class PropertyContactMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'email.property.contact',
+            html: 'email.property.reponse',
         );
     }
 

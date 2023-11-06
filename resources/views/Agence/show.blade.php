@@ -73,8 +73,8 @@
                             'class' => 'col',
                             'label' => 'Télephone',
                             'name' => 'phone',
-                            'type' => 'number',
-                            'value' => '0000000000'
+                            'type' => 'text',
+                            'value' => '12365'
                         ])
                         @include('shared.input', [
                             'class' => 'col',

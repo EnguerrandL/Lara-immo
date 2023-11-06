@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyContactRequest;
 use App\Mail\PropertyContactMail;
+use App\Mail\ReponseAutomatiqueMail;
 use App\Models\Property;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -104,6 +105,7 @@ class AgenceController extends Controller
     {
 
         Mail::send(new PropertyContactMail($property, $request->validated()));
+        Mail::send(new ReponseAutomatiqueMail($property, $request->validated()));
 
 
         return back()->with(['success' => 'Votre message a été envoyé avec succès', 'alert-class' => 'success']);
