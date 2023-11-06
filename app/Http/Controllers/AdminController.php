@@ -39,6 +39,7 @@ class AdminController extends Controller
             'size' => 40,
             'room' => 1,
             'part' => 2,
+            'floor' => 1,
             'city' => 'Avignon',
             'zipcode' => 84000,
             'isAvailable' => false

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgenceController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +34,11 @@ Route::post('proprerty/{property}/contact', [AgenceController::class, 'contact']
 ]); 
 
 
+Route::get('/login',  [AuthController::class, 'login'])->name('admin.login');
+Route::post('/login',  [AuthController::class, 'doLogin']);
+Route::delete('/logout',  [AuthController::class, 'logout'])->name('admin.logout');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
  Route::get('/property', [AdminController::class, 'index'])->name('admin.index');
  Route::get('/property/create', [AdminController::class, 'create'])->name('admin.create');
  Route::post('/property/create', [AdminController::class, 'store'])->name('admin.store');
@@ -53,5 +57,8 @@ Route::prefix('admin')->group(function () {
 
 
  Route::get('/property/{property}/{image}/delete', [AdminController::class, 'deleteImgFromProperty'])->name('admin.img.delete');
+
+
+ 
 
 });
