@@ -17,11 +17,10 @@ class PropertyFactory extends Factory
     public function definition(): array
     {
         return [
-            'isAvailable' => fake()->boolean($chanceOfGettingTrue = 50),
+            'isAvailable' => fake()->boolean($chanceOfGettingTrue = 70),
             'title' => fake()->name(),
             'description' => fake()->text(100),
             'adress' => fake()->streetAddress(),
-            // 'images' => fake()->imageUrl( 640, 480),
             'slug' => fake()->slug(),
             'city' => fake()->city(),
             'size' => fake()->numberBetween('20', '200'),
@@ -32,9 +31,7 @@ class PropertyFactory extends Factory
             'floor' => fake()->numberBetween('1', '3'),
 
 
-            
-            
-        ];
 
+        ];
     }
 }
