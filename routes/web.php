@@ -27,6 +27,10 @@ Route::get('/tous-nos-biens', [AgenceController::class, 'listing'])->name('agenc
 
 
 Route::get('/search', [AgenceController::class, 'search'])->name('agence.search');
+Route::post('proprerty/{property}/contact', [AgenceController::class, 'contact'])->name('agence.contact.form')
+->where([
+    'property' => $idRegex,
+]); 
 
 
 

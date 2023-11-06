@@ -53,7 +53,7 @@
 
 
                     <h3>Intéressé(e) par ce bien ? </h3>
-                    <form class="" method="POST">
+                    <form class="" method="POST" action="{{ route('agence.contact.form', $property) }}">
 
                         @csrf
 
@@ -61,29 +61,34 @@
                             'class' => 'col',
                             'label' => 'Prénom',
                             'name' => 'prenom',
+                            'value' => 'Max'
                         ])
                         @include('shared.input', [
                             'class' => 'col',
                             'label' => 'nom',
                             'name' => 'nom',
+                            'value' => 'LaMenace'
                         ])
                         @include('shared.input', [
                             'class' => 'col',
                             'label' => 'Télephone',
                             'name' => 'phone',
                             'type' => 'number',
+                            'value' => '0000000000'
                         ])
                         @include('shared.input', [
                             'class' => 'col',
                             'label' => 'Email',
                             'name' => 'mail',
                             'type' => 'email',
+                            'value' => 'max@lamenace.fr'
                         ])
 
                         @include('shared.input', [
                             'type' => 'textarea',
                             'label' => 'Votre message',
-                            'name' => 'usermessage',
+                            'name' => 'message',
+                            'value' => 'I want to buy this amazing property ! '
                         ])
 
                         <button class="mt-2 btn btn-primary">Envoyer votre message</button>

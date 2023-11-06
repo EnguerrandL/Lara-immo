@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PropertyContactRequest;
+use App\Mail\PropertyContactMail;
 use App\Models\Property;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class AgenceController extends Controller
@@ -94,5 +97,16 @@ class AgenceController extends Controller
             'property' => $property,
             'slug' => $property->slug
         ]);
+    }
+
+
+    public function contact(Property $property, PropertyContactRequest $request)
+    {
+
+        Mail::send(new PropertyContactMail($property, $request->validated()));
+
+
+        return back()->with(['success' => 'Votre message a été envoyé avec succès', 'alert-class' => 'success']);
+
     }
 }
