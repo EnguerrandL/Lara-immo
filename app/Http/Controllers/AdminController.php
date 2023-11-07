@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PhpParser\Node\Stmt\Return_;
 
+
 class AdminController extends Controller
 {
 
@@ -54,38 +55,14 @@ class AdminController extends Controller
     public function store(RequestAdminForm $request, Property $property)
     {
 
-
         $validatedData = $request->validated();
 
         $validatedData['slug'] = Str::slug($request->title);
 
         $property = Property::create($validatedData);
-
-
-        $data = $request->validated('images');
-        $imagesData = [];
-
-        if ($request->file('images') != null) {
-
-
-
-            foreach ($request->file('images') as $imagefile) {
-                $image = new Image();
-                $path = $imagefile->store('biens', 'public');
-                $image->images = $path;
-                $image->property_id = $property->id;
-
-                $imagesData[] = $path;
-
-                $image->save();
-            }
-
-            $data['images'] = $imagesData;
-        }
-
         $property->save();
-
-
+        $this->manageImg($request, $property);
+        $property->save();
         $property->options()->sync($request->validated('name'));
 
 
@@ -115,13 +92,9 @@ class AdminController extends Controller
     public function update(Property $property, RequestAdminForm $request)
     {
 
-    
 
-        $this->manageImg($request, $property); 
-
-
-        $property->update($request->validated()); 
-  
+        $this->manageImg($request, $property);
+        $property->update($request->validated());
 
         $property->options()->sync($request->validated('name'));
         $property->save();
@@ -220,7 +193,6 @@ class AdminController extends Controller
     }
 
 
-
     public function manageImg(RequestAdminForm $request, Property $property): array
     {
 
@@ -231,35 +203,98 @@ class AdminController extends Controller
         if ($request->file('images') != null) {
             foreach ($request->file('images') as $imagefile) {
 
-                $filename = uniqid() . '_' . $imagefile->getClientOriginalName();
+                $filename = uniqid() . '_' .  $imagefile->getClientOriginalName();
 
-                if (Storage::disk('public')->exists('biens/' . $filename)) {
-                    // Si le fichier existe, le supprimer
-                    Storage::disk('public')->delete('biens/' . $filename);
-                }
-    
-                
+                // if (Storage::disk('public')->exists('biens/' . $filename)) {
+                //     Storage::disk('public')->delete('biens/' . $filename);
+                // }
+
+
+                // uniqid() . '_' .
+
 
                 $image = new Image();
                 $path = $imagefile->storeAs('biens', $filename, 'public');
-           
+
                 $image->images = $path;
 
                 $image->property_id = $property->id;
-
-
                 $imagesData[] = $path;
-               
-
-       
-
                 $image->save();
             }
-
+        
             $data['images'] = $imagesData;
         }
         return  $imagesData;
-
-        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// public function saved(RequestAdminForm $request, Property $property): array
+// {
+
+
+//     $data = $request->validated('images');
+//     $imagesData = [];
+
+//     if ($request->file('images') != null) {
+//         foreach ($request->file('images') as $imagefile) {
+
+//             $filename = uniqid() . '_' . $imagefile->getClientOriginalName();
+
+//             // Storage::disk('public')->exists('biens/' . $filename)
+
+
+
+//             if (Storage::disk('public')->exists('biens/' . $filename)) {
+//                 // Si le fichier existe, le supprimer
+//                 Storage::disk('public')->delete('biens/' . $filename);
+//             }
+
+//             $image = new Image();
+//             $path = $imagefile->storeAs('biens', $filename, 'public');
+
+//             $image->images = $path;
+
+
+
+
+//             $image->property_id = $property->id;
+
+
+//             $imagesData[] = $path;
+
+
+
+
+//             $image->save();
+//         }
+
+//         $data['images'] = $imagesData;
+//     }
+//     return  $imagesData;
+// }

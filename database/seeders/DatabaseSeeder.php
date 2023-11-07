@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         });
 
 
-        Image::factory(50)->create();
+        Image::factory(100)->create();
 
 
     }
