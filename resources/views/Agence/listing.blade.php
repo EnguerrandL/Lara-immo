@@ -53,7 +53,7 @@
                     <div class="card" style="width: 40rem;">
 
                         @foreach ($property->images->take(1) as $img)
-                            <img class="card-img-top" src=" {{ $img->images }}" alt="Card image cap">
+                            <img class="card-img-top" src=" {{ $img->imgUrl() }}" alt="Card image cap">
                         @endforeach
                         <div class="card-body">
 

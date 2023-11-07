@@ -95,36 +95,6 @@ class AdminController extends Controller
 
 
 
-    // private function deleteImagesOnCascade(Property $property, RequestAdminForm $request)
-    // {
-    //     $data = $request->validated();
-    //     $images = $request->input('images');
-
-    //     foreach ($images as $image) {
-    //         if ($image != null) {
-    //             // Ne faites rien ici, car vous stockerez les images plus tard.
-    //         }
-    //     }
-
-    //     if ($property->images) {
-    //         Storage::disk('public')->delete($property->images);
-    //     }
-
-    //     // Stockez les images ici s'il y en a de valides.
-    //     $uploadedImages = [];
-    //     foreach ($images as $image) {
-    //         if ($image != null) {
-    //             $filename = Carbon::now()->timestamp . '_' . uniqid();
-    //             $path = $image->store('biens', 'public');
-    //             $uploadedImages[] = $path;
-    //         }
-    //     }
-
-    //     $data['images'] = $uploadedImages;
-
-    //     return $data;
-    // }
-
 
 
     public function edit(Property $property)
@@ -138,28 +108,21 @@ class AdminController extends Controller
     }
 
 
+
+
+
+
     public function update(Property $property, RequestAdminForm $request)
     {
 
-        $data = $request->validated('images');
-        $imagesData = [];
+    
 
-        if ($request->file('images') != null) {
-            foreach ($request->file('images') as $imagefile) {
-                $image = new Image();
-                $path = $imagefile->store('biens', 'public');
-                $image->images = $path;
-                $image->property_id = $property->id;
+        $this->manageImg($request, $property); 
 
-                $imagesData[] = $path;
 
-                $image->save();
-            }
+        $property->update($request->validated()); 
+  
 
-            $data['images'] = $imagesData;
-        }
-
-        $property->update($request->validated());
         $property->options()->sync($request->validated('name'));
         $property->save();
 
@@ -169,6 +132,13 @@ class AdminController extends Controller
                 'alert-class' => 'warning'
             ]);
     }
+
+
+
+
+
+
+
 
 
     public function destroy(Property $property)
@@ -247,5 +217,49 @@ class AdminController extends Controller
 
         return redirect()->back()
             ->with(['success' => 'L\'option ' . $name . ' a été supprimée avec succès', 'alert-class' => 'danger']);
+    }
+
+
+
+    public function manageImg(RequestAdminForm $request, Property $property): array
+    {
+
+
+        $data = $request->validated('images');
+        $imagesData = [];
+
+        if ($request->file('images') != null) {
+            foreach ($request->file('images') as $imagefile) {
+
+                $filename = uniqid() . '_' . $imagefile->getClientOriginalName();
+
+                if (Storage::disk('public')->exists('biens/' . $filename)) {
+                    // Si le fichier existe, le supprimer
+                    Storage::disk('public')->delete('biens/' . $filename);
+                }
+    
+                
+
+                $image = new Image();
+                $path = $imagefile->storeAs('biens', $filename, 'public');
+           
+                $image->images = $path;
+
+                $image->property_id = $property->id;
+
+
+                $imagesData[] = $path;
+               
+
+       
+
+                $image->save();
+            }
+
+            $data['images'] = $imagesData;
+        }
+        return  $imagesData;
+
+        
     }
 }

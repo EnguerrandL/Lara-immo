@@ -14,12 +14,6 @@ class AuthController extends Controller
     public function login(){
 
 
-        // User::create([
-        //     'name' => 'Admin',
-        //     'email' => 'admin@admin.fr',
-        //     'password' => Hash::make('0000')
-        // ]);
-
 
         return view('auth.login');
     }

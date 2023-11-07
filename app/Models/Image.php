@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Image extends Model
 {
@@ -23,6 +24,12 @@ class Image extends Model
 
     public function imgUrl(): string
     {
-        return Storage::disk('public')->url($this->images);
+
+
+        if (Str::contains($this->images, 'placeholder')) {
+            return $this->images;
+        } else {
+            return Storage::disk('public')->url($this->images);
+        }
     }
 }

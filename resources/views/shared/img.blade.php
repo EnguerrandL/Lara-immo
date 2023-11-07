@@ -26,14 +26,9 @@
                         <div class="thumbnail">
 
 
+                            <img src="{{ $img->imgUrl() }}" class="card-img-top" alt="...">
 
 
-
-                            <img src="{{ $img->images }}" class="card-img-top" alt="...">
-
-
-
-                            {{-- <img src="{{ asset($img->imgUrl()) }}" alt="" style="width:100%"> --}}
                             <input type="hidden" name="image_id" value="{{ $img->id }}">
 
                             <a class="btn btn-danger"

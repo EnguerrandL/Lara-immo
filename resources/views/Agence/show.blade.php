@@ -21,7 +21,7 @@
                         <div class="carousel-inner">
                             @foreach ($property->images as $key => $img)
                                 <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                    <img class="d-block w-100" src="{{ $img->images }}" alt="Image {{ $key + 1 }}">
+                                    <img class="d-block w-100" src="{{ $img->imgUrl() }}" alt="Image {{ $key + 1 }}">
                                 </div>
                             @endforeach
                         </div>
@@ -38,7 +38,7 @@
                     <div class="row">
                         @foreach ($property->images->take(6) as $img)
                             <div class="col-md-4">
-                                <img class="mt-5 mr-5 mb-2 img-fluid" src="{{ $img->images }}" alt="Image">
+                                <img class="mt-5 mr-5 mb-2 img-fluid" src="{{ $img->imgUrl() }}" alt="Image">
                             </div>
                         @endforeach
                     </div>
@@ -109,7 +109,7 @@
 
 
         <div class="mt-5 mb-5 col-6 mx-auto">
-            <h3>Toutes les caractéristiques de votre futur bien</h3>
+            <h3>Tous les caractéristiques de votre futur bien</h3>
             <table class="table">
 
 

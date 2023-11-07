@@ -7,8 +7,10 @@ namespace Database\Seeders;
 use App\Models\Image;
 use App\Models\Option;
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,6 +35,11 @@ class DatabaseSeeder extends Seeder
 
 
         $options = Option::all();
+
+        User::factory()->create([
+            'email' => 'admin@admin.fr',
+            'password' => Hash::make('0000')
+        ]);
 
         Property::factory(10)->create()->each(function ($property) use ($options) {
             $randomOptions = $options->random(rand(1, $options->count()));
