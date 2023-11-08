@@ -22,16 +22,6 @@ class Image extends Model
     }
 
 
-    // public function imgUrl(): string
-    // {
-
-
-    //     if (Str::contains($this->images, 'placeholder')) {
-    //         return $this->images;
-    //     } else {
-    //         return Storage::disk('public')->url($this->images);
-    //     }
-    // }
 
 
     public function imgUrl(): string
