@@ -37,9 +37,9 @@ class Image extends Model
     public function imgUrl(): string
 {
     if (Str::contains($this->images, 'placeholder')) {
-        return $this->images; // Si l'image est une URL externe ou une URL de placeholder, retournez-la telle quelle.
+        return $this->images; 
     } else {
-        // Utilisez asset() pour générer l'URL complète en fonction du chemin relatif de l'image.
+       
         return asset(Storage::disk('public')->url($this->images));
     }
 }
