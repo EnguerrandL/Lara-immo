@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Http\Requests\PropertyContactRequest;
 use App\Models\Property;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,9 +18,9 @@ class ReponseAutomatiqueMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Property $property, public array $data)
+    public function __construct( public Property $property, public array $data)
     {
-        //
+     
     }
 
     /**
@@ -28,7 +29,8 @@ class ReponseAutomatiqueMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: 'enguerrand@netmedia.fr',
+            
+            to: $this->data['mail'],
             subject: 'Reponse Automatique  : concernant votre demande pour le bien : ' .  $this->property->title
         );
     }

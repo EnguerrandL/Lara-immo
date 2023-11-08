@@ -32,15 +32,16 @@ class PropertyContactMail extends Mailable
             subject: 'Une nouvelle demande est arrivée à propos du bien' . $this->property->title,
          
            
-        );
-    }
+        ); 
 
+    }
     /**
      * Get the message content definition.
      */
     public function content(): Content
     {
         return new Content(
+
             markdown: 'email.property.contact',
         );
     }
